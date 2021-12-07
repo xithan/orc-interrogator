@@ -1,0 +1,22 @@
+[
+  {
+    "name": "PK",
+    "strategy": "Nice"
+  },
+  {
+    "name": "UM",
+    "strategy": "TitForTat"
+  },
+  {
+    "name": "BH",
+    "strategy": "Evil"
+  },
+  {
+    "name": "JW",
+    "strategy": "Rando"
+  },
+  {
+    "name": "ATh",
+    "strategy": "Grudge"
+  }
+]

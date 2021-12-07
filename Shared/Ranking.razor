@@ -1,0 +1,42 @@
+@using Interrogator.Game
+@using Interrogator.Game.Setup
+<div class="card mb-4 ranking">
+<div class="card-body justify-content-center">
+    <table class="table stats">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Total Sentence</th>
+            @if (ShowDuelWins)
+            {
+                <th>Duel Wins</th>
+            }
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var prisoner in PrisonerRanking)
+        {
+            <tr>
+                <td>@prisoner.Name</td>
+                <td>@prisoner.TotalSentence</td>
+                 @if (ShowDuelWins)
+                 {
+                     <td>@prisoner.DuelWins</td>
+                 }
+            </tr>
+        }
+        </tbody>
+    </table>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public List<Prisoner> Prisoners { get; set; }
+    
+    [Parameter]
+    public bool ShowDuelWins { get; set; }
+
+    private List<Prisoner> PrisonerRanking => 
+        Prisoners.OrderBy(p => p.TotalSentence).ToList();
+
+}

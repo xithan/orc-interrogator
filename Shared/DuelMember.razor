@@ -1,0 +1,23 @@
+@using Interrogator.Game
+    <div class="participant @CssClass">
+        <div class="info">
+            <span class="name">@Member.Prisoner.Name</span>
+        </div>
+        <div class="answers">
+            <span class="badge points">@Member.Sentence</span>
+            @foreach (var x in Member.Moves)
+            {
+                <div class="answer color-@x"></div>
+            }
+
+        </div>
+    </div>
+    
+@code {
+    [Parameter]
+    public Participant Member { get; set; }
+    
+    [Parameter]
+    public string CssClass { get; set; }
+    
+}

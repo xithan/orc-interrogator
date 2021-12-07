@@ -1,0 +1,30 @@
+@page "/"
+@page "/start"
+@page "/prison/{Prison}"
+
+@using Interrogator.Game
+@using Interrogator.Game.Setup
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <svg class="start-icon">
+        <use href="/icons.svg#optano-logo-purple"></use>
+    </svg>
+    <a class="btn btn-primary start" href="interrogate">Start</a>
+</div>
+
+@code {
+    [Parameter]
+    public string Prison { get; set; }
+    
+    [Inject]
+    private PrisonManager PrisonManager { get; set; }
+    
+    [Inject]
+    private Loader Loader { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        base.OnParametersSetAsync();
+        var prison = await Loader.LoadPrison(this.Prison);
+        await this.PrisonManager.InitializeNewGame(prison);
+    }
+}

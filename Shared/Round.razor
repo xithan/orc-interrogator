@@ -1,0 +1,14 @@
+
+
+<div class="round">
+    <h3>Round @RoundData.Number</h3>
+    @foreach (var duel in RoundData.Duels)
+    {
+        <Duel DuelData="@duel"></Duel>
+    }
+</div>
+
+@code {
+    [Parameter] 
+    public Game.Round RoundData { get; set; } 
+}

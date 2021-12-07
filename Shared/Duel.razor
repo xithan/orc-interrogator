@@ -1,0 +1,8 @@
+<div class="duel">
+    <DuelMember CssClass="first" Member="@DuelData.Participants.Item1" />
+    <DuelMember CssClass="second" Member="@DuelData.Participants.Item2" />
+</div>
+@code {
+    [Parameter]
+    public Game.Duel DuelData { get; set; }
+}

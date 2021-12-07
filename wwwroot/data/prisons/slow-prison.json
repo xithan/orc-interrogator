@@ -1,0 +1,7 @@
+{
+  "prisoners": "orcs-test",
+  "points": [1, 4, 6, 10],
+  "turns": 10,
+  "msPerTurn": 300
+}
+

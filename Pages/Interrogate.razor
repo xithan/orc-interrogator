@@ -1,0 +1,93 @@
+﻿@page "/interrogate"
+@using Interrogator.Game
+@using System.Timers
+@using Interrogator.Game.Setup
+@inject HttpClient Http
+
+@if (@ActivePrison == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <Round RoundData="@PrisonManager.ActiveRound"/>
+    @if (!IsRunning)
+    {
+        <button class="btn btn-primary" @onclick="Start">Go!</button> 
+    }
+    else if (ShowNextButton)
+    {
+        <button class="btn btn-primary" @onclick="Next">Continue</button>    
+    } 
+    
+}
+
+@code {
+    private Prison ActivePrison => this.PrisonManager.ActivePrison;
+    
+    [Inject] 
+    private PrisonManager PrisonManager { get; set; }
+
+    [Inject]
+    private NavigationManager Navigation { get; set; }
+    
+    private int turnCount = 0;
+
+    private Timer _timer;
+
+    private void SetTimer()
+    {
+        this._timer = new System.Timers.Timer(PrisonManager.ActivePrison.MsPerTurn);
+        this._timer.Elapsed += OnTimedEvent;
+        this._timer.AutoReset = true;
+        this._timer.Enabled = true;
+    }
+
+    private async void OnTimedEvent(Object source, ElapsedEventArgs e)
+    {
+        if (this.turnCount < PrisonManager.ActivePrison.NumberOfTurns)
+        {
+            foreach (var duel in this.PrisonManager.ActiveRound.Duels)
+            {
+                duel.Interrogate(turnCount, this.ActivePrison.PayoffCalculator);
+            }
+            turnCount++;
+            await InvokeAsync(StateHasChanged);
+        }
+        else
+        {
+            this._timer.Stop();
+            this._timer.Dispose();
+            this.ShowNextButton = true;
+            this.StateHasChanged();
+        }
+    }
+
+    public bool ShowNextButton { get; set; }
+    
+    public bool IsRunning { get; set; }
+
+    
+    private void Start()
+    {
+        this.SetTimer();
+        this.IsRunning = true;
+    }
+    
+    private void Next()
+    {
+        this.PrisonManager.FinishRound();
+        this.Navigation.NavigateTo("break");
+    }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+           // this.SetTimer();
+        }
+    }
+}

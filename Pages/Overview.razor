@@ -1,0 +1,21 @@
+@page "/overview"
+@using Interrogator.Game
+@using Round = Interrogator.Game.Round
+<div class="compact">
+    
+    @if (PrisonManager != null)
+    {
+        @foreach (var round in @PrisonManager.Rounds)
+        {
+            <Round RoundData="round"/>
+        }
+    }
+</div>
+
+@code {
+    [Inject] 
+    private PrisonManager PrisonManager { get; set; }
+    
+    [Parameter]
+    public int RoundId { get; set; }
+}

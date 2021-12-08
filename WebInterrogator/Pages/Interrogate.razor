@@ -20,19 +20,18 @@ else
     else if (ShowNextButton)
     {
         <button class="btn btn-primary" @onclick="Next">Continue</button>    
-    } 
-    
+    }
 }
 
 @code {
-    private Prison ActivePrison => this.PrisonManager.ActivePrison;
-    
     [Inject] 
     private PrisonManager PrisonManager { get; set; }
 
     [Inject]
     private NavigationManager Navigation { get; set; }
     
+    private Prison ActivePrison => this.PrisonManager.ActivePrison;
+
     private int turnCount = 0;
 
     private Timer _timer;
@@ -49,11 +48,11 @@ else
     {
         if (this.turnCount < PrisonManager.ActivePrison.NumberOfTurns)
         {
+            turnCount++;
             foreach (var duel in this.PrisonManager.ActiveRound.Duels)
             {
                 duel.Interrogate(turnCount, this.ActivePrison.PayoffCalculator);
             }
-            turnCount++;
             await InvokeAsync(StateHasChanged);
         }
         else
@@ -65,9 +64,9 @@ else
         }
     }
 
-    public bool ShowNextButton { get; set; }
-    
-    public bool IsRunning { get; set; }
+    private bool ShowNextButton { get; set; }
+
+    private bool IsRunning { get; set; }
 
     
     private void Start()

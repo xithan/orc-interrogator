@@ -5,10 +5,6 @@ namespace Interrogator.Game;
 
 public class PrisonManager
 {
-    public PrisonManager()
-    {
-        
-    }
     public Prison ActivePrison { get; set; }
     
     public List<Round> Rounds { get; set; }

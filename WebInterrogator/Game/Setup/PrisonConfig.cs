@@ -23,5 +23,5 @@ public class PrisonConfig
     /// <summary>
     /// Number of milliseconds to wait for each turn
     /// </summary>
-    public int MsPerTurn { get; set; }
+    public double MsPerTurn { get; set; }
 }

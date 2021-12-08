@@ -1,0 +1,37 @@
+@using Interrogator.Game
+@using Interrogator.Game.Setup
+<div class="card mb-4 ranking">
+<div class="card-body justify-content-center">
+    <table class="table stats">
+        <tbody>
+            <tr>
+                <td>Turns per Round</td>
+                <td>@Prison.NumberOfTurns</td>
+            </tr>
+        <tr>
+            <td>Both cooperate</td>
+            <td>@Prison.PayoffCalculator.BothCooperate</td>
+        </tr>
+        <tr>
+            <td>Both betray</td>
+            <td>@Prison.PayoffCalculator.BothBetray</td>
+        </tr>
+        <tr>
+            <td>Betrayed</td>
+            <td>@Prison.PayoffCalculator.Betrayed</td>
+        </tr>
+        <tr>
+                        <td>Betraying</td>
+                        <td>@Prison.PayoffCalculator.Betraying</td>
+                    </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public Prison Prison { get; set; }
+    
+
+
+}

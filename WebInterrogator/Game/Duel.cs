@@ -15,19 +15,22 @@ namespace Interrogator.Game
             this.Participants = (new Participant(p1), new Participant(p2));
         }
         
-        public (Participant, Participant) Participants { get; set; }
+        public (Participant, Participant) Participants { get; }
 
         public void Interrogate(int turn, PayoffCalculator payoffCalculator)
         {
-            var p1 = Participants.Item1;
-            var p2 = Participants.Item2;
-            var p1Move = p1.Interrogate(turn, Participants.Item2);
-            var p2Move = p2.Interrogate(turn, Participants.Item1);
-            p1.Moves.Add(p1Move);
-            p2.Moves.Add(p2Move);
-            var (p1Points, p2Points) = payoffCalculator.CalculatePayoff(p1Move, p2Move);
-            p1.Sentence += p1Points;
-            p2.Sentence += p2Points;
+            var p1 = this.Participants.Item1;
+            var p2 = this.Participants.Item2;
+            var p1NextMove = p1.Interrogate(turn, p2.Moves);
+            var p2NextMove = p2.Interrogate(turn, p1.Moves);
+            
+            // Important: Don't update moves before both participants are interrogated
+            p1.Moves.Add(p1NextMove);  
+            p2.Moves.Add(p2NextMove);
+            
+            var (p1Sentence, p2Sentence) = payoffCalculator.CalculatePayoff(p1NextMove, p2NextMove);
+            p1.AddSentence(p1Sentence);
+            p2.AddSentence(p2Sentence);
         }
     }
     

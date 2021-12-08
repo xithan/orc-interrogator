@@ -13,16 +13,21 @@ namespace Interrogator.Game
             this.Sentence = 0;
             this.Moves = new List<Move>();
         }
-        
-        public Prisoner Prisoner { get; set; }
-        
-        public int Sentence { get; set; }
-        
-        public List<Move> Moves { get; set; }
 
-        public Move Interrogate(int turn, Participant other)
+        public void AddSentence(int value)
         {
-            return this.Prisoner.Strategy.GetNextMove(turn, this.Moves, other.Moves);
+            this.Sentence += value;
+        }
+        
+        public Prisoner Prisoner { get; }
+        
+        public int Sentence { get; private set; }
+        
+        public List<Move> Moves { get; }
+
+        public Move Interrogate(int turn, IList<Move> opponentMoves)
+        {
+            return this.Prisoner.Strategy.GetNextMove(turn, this.Moves, opponentMoves);
         }
     }
 }

@@ -24,6 +24,10 @@
         }
             
         <h6 class="navbar-text">Configuration</h6>
+         @if (PrisonManager.ActivePrison != null)
+                {
+                    <Config Prison="@PrisonManager.ActivePrison"></Config>  
+                }
         <form class="d-flex">
             <input @bind="PrisonToLoad" class="form-control me-2" type="text" placeholder="Prison" aria-label="Search">
             <button @onclick="Load" class="btn btn-outline-success">Load</button>
@@ -33,15 +37,6 @@
 
 
 @code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-    
     private Prison ActivePrison => this.PrisonManager.ActivePrison;
 
     private string PrisonToLoad { get; set; }

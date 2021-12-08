@@ -28,7 +28,7 @@
         if (this.PrisonManager.ActivePrison == null)
         {
             var prison = await Loader.LoadPrison();
-            await this.PrisonManager.InitializeNewGame(prison);
+            this.PrisonManager.InitializeNewGame(prison);
         }
 
     }

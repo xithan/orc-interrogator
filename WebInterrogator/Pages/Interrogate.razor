@@ -12,14 +12,14 @@
 }
 else
 {
-    <Round RoundData="@PrisonManager.ActiveRound"/>
+    <Round RoundData="@PrisonManager.CurrentRound"/>
     @if (!IsRunning)
     {
-        <button class="btn btn-primary" @onclick="Start">Go!</button> 
+        <button class="btn btn-purple mt-3" @onclick="Start">Go!</button> 
     }
     else if (ShowNextButton)
     {
-        <button class="btn btn-primary" @onclick="Next">Continue</button>    
+        <button class="btn btn-purple mt-3" @onclick="Next">Continue</button>    
     }
 }
 
@@ -31,8 +31,6 @@ else
     private NavigationManager Navigation { get; set; }
     
     private Prison ActivePrison => this.PrisonManager.ActivePrison;
-
-    private int turnCount = 0;
 
     private Timer _timer;
 
@@ -46,33 +44,39 @@ else
 
     private async void OnTimedEvent(Object source, ElapsedEventArgs e)
     {
-        if (this.turnCount < PrisonManager.ActivePrison.NumberOfTurns)
+        if (!PrisonManager.IsRoundFinished)
         {
-            turnCount++;
-            foreach (var duel in this.PrisonManager.ActiveRound.Duels)
-            {
-                duel.Interrogate(turnCount, this.ActivePrison.PayoffCalculator);
-            }
+            this.PrisonManager.RunTurnBatch();
             await InvokeAsync(StateHasChanged);
         }
         else
         {
             this._timer.Stop();
             this._timer.Dispose();
-            this.ShowNextButton = true;
             this.StateHasChanged();
         }
     }
 
-    private bool ShowNextButton { get; set; }
+    private bool ShowNextButton => PrisonManager.IsRoundFinished;
 
     private bool IsRunning { get; set; }
-
     
     private void Start()
     {
-        this.SetTimer();
         this.IsRunning = true;
+        if (PrisonManager.ActivePrison.MsPerTurn > 0)
+        {
+            this.SetTimer(); 
+        }
+        else
+        {
+            InvokeAsync(StateHasChanged);
+            while (!PrisonManager.IsRoundFinished)
+            {
+                this.PrisonManager.RunTurnBatch();
+            }
+            InvokeAsync(StateHasChanged);
+        }
     }
     
     private void Next()

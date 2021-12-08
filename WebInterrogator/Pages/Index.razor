@@ -4,12 +4,31 @@
 
 @using Interrogator.Game
 @using Interrogator.Game.Setup
-<div class="d-flex justify-content-center align-items-center vh-100">
-    <svg class="start-icon">
-        <use href="/icons.svg#optano-logo-purple"></use>
-    </svg>
-    <a class="btn btn-primary start" href="interrogate">Start</a>
+@using System.Text.Json.Serialization
+<div class="d-flex justify-content-center w-100">
+    <h1>Orc Interrogator</h1>
 </div>
+<Wheel>
+    <a class="btn btn-purple start d-flex justify-content-center align-items-center" href="interrogate">Start</a>
+</Wheel>
+<div class="d-flex justify-content-center align-items-center title-row">
+    <h3>Prisoners</h3>
+</div>
+<div class="d-flex justify-content-center align-items-center">
+    @if (PrisonManager.ActivePrison != null)
+    {
+        foreach (var prisoner in PrisonManager.ActivePrison.Prisoners)
+        {
+            <div class="prisoner-container">
+                <svg class="prisoner-icon">
+                    <use href="/icons.svg#optano-logo-purple"></use>
+                </svg>
+                <div class="prisoner">@prisoner.Name</div>
+            </div>
+        }
+    }
+</div>
+
 
 @code {
     [Parameter]
@@ -25,6 +44,6 @@
     {
         base.OnParametersSetAsync();
         var prison = await Loader.LoadPrison(this.Prison);
-        await this.PrisonManager.InitializeNewGame(prison);
+        this.PrisonManager.InitializeNewGame(prison);
     }
 }

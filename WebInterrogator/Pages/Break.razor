@@ -2,13 +2,26 @@
 @using Interrogator.Game
 @layout NarrowLayout
 
-@if (PrisonManager != null)
+@if (PrisonManager.ActivePrison != null)
 {
-    <h3 class="mb-4">Round @CurrentRound/@PrisonManager.RoundTotalCount</h3>
+    <h3 class="mb-4">
+    @if (CurrentRound < PrisonManager.TotalRoundCount)
+    {
+        <text>Round @CurrentRound/@PrisonManager.TotalRoundCount</text>
+    }
+    else
+    {
+        <text>Final Result</text>
+    }
+    </h3>
     <Ranking Prisoners="@PrisonManager.ActivePrison.Prisoners" ShowDuelWins="true"></Ranking>
 }
 
-<button class="btn btn-primary" @onclick="NextRound">Next Round</button>
+@if (CurrentRound < PrisonManager.TotalRoundCount)
+{
+    <button class="btn btn-purple" @onclick="NextRound">Next Round</button>    
+}
+
 
 @code {
     [Inject]

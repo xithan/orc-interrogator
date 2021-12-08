@@ -7,6 +7,8 @@
     using Interrogator.Game;
     using Interrogator.Strategies;
 
+
+
     public static class Program
     {
         #region Static Fields
@@ -14,8 +16,11 @@
         // TODO Remove demo strategies and add participant's strategies
         private static readonly Type[] Strategies =
             { 
-                typeof(AlwaysBetray),
-                typeof(AlwaysCooperate),
+                typeof(Evil),
+                typeof(Nice),
+                typeof(Grudge),
+                typeof(Rando),
+                typeof(TitForTat),
             };
 
         #endregion

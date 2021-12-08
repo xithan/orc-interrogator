@@ -1,13 +1,9 @@
-﻿namespace Interrogator.Strategies
+namespace Interrogator.Strategies
 {
-    using System.Collections.Generic;
-
     using Interrogator.Game;
-
+    
     public interface IStrategy
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Gets the next move.
         /// </summary>
@@ -16,7 +12,5 @@
         /// <param name="previousOpponentMoves">The list of previous partner moves.</param>
         /// <returns>The next move.</returns>
         Move GetNextMove(int currentTurn, IList<Move> previousOwnMoves, IList<Move> previousOpponentMoves);
-        
-        #endregion
     }
 }

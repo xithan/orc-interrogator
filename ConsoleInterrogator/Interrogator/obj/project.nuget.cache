@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jeKZamnIp94vQcJJXl+fzKKmwbgmsH7RsEi78Cq8PiMMoSg+lGXrFe8C9AuWcDp+zDmbHXZJyn0E/93bqJNUEQ==",
+  "dgSpecHash": "uXjpjpKjgzM+1zAj7m9NvbX0GQJe7vOaiMwglC2fkaloJ0aiQ+6kEGk7/f5nF8Pvtn0tsQTC2V3e6GD4rr7ddg==",
   "success": true,
-  "projectFilePath": "C:\\git\\Weihnachtsspiel\\IteratedPrisonersDilemmaTournament\\Interrogator\\Interrogator.csproj",
+  "projectFilePath": "C:\\git\\orc-interrogator\\ConsoleInterrogator\\Interrogator\\Interrogator.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

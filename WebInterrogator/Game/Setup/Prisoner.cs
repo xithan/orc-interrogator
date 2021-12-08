@@ -1,5 +1,7 @@
 namespace Interrogator.Game.Setup
 {
+    using Interrogator.Strategies;
+
     public class Prisoner
     {
         private Type _strategyType;
@@ -7,7 +9,7 @@ namespace Interrogator.Game.Setup
         public Prisoner(string name, string strategyName)
         {
             this.Name = name;
-            this._strategyType = Type.GetType($"Interrogator.Game.Strategies.{strategyName}");
+            this._strategyType = Type.GetType($"Interrogator.Strategies.{strategyName}");
             this.ResetStrategy();
         }
 

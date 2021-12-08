@@ -1,0 +1,16 @@
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\obj\Debug\net5.0\Interrogator.csproj.AssemblyReference.cache
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\obj\Debug\net5.0\Interrogator.GeneratedMSBuildEditorConfig.editorconfig
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\obj\Debug\net5.0\Interrogator.AssemblyInfoInputs.cache
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\obj\Debug\net5.0\Interrogator.AssemblyInfo.cs
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\obj\Debug\net5.0\Interrogator.csproj.CoreCompileInputs.cache
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\bin\Debug\net5.0\Interrogator.exe
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\bin\Debug\net5.0\Interrogator.deps.json
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\bin\Debug\net5.0\Interrogator.runtimeconfig.json
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\bin\Debug\net5.0\Interrogator.runtimeconfig.dev.json
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\bin\Debug\net5.0\Interrogator.dll
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\bin\Debug\net5.0\ref\Interrogator.dll
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\bin\Debug\net5.0\Interrogator.pdb
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\obj\Debug\net5.0\Interrogator.dll
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\obj\Debug\net5.0\ref\Interrogator.dll
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\obj\Debug\net5.0\Interrogator.pdb
+C:\git\orc-interrogator\ConsoleInterrogator\Interrogator\obj\Debug\net5.0\Interrogator.genruntimeconfig.cache

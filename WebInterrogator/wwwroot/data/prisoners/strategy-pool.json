@@ -1,0 +1,58 @@
+[
+  {
+    "name": "F4",
+    "strategy": "Fortress4"
+  },
+  {
+    "name": "F3",
+    "strategy": "Fortress3"
+  },
+  {
+    "name": "PK",
+    "strategy": "PK"
+  },
+  {
+    "name": "TFT",
+    "strategy": "TitForTat"
+  },
+  {
+    "name": "Nice",
+    "strategy": "Nice"
+  },
+  {
+    "name": "Evil",
+    "strategy": "Evil"
+  },
+  {
+    "name": "Rando",
+    "strategy": "Rando"
+  },
+  {
+    "name": "EvilRando",
+    "strategy": "EvilRando"
+  },
+  {
+    "name": "NiceRando",
+    "strategy": "NiceRando"
+  },
+  {
+    "name": "Grudge",
+    "strategy": "Grudge"
+  },
+  {
+    "name": "TF2T",
+    "strategy": "TitForTwoTats"
+  },
+  {
+    "name": "2TFT",
+    "strategy": "TwoTitsForTat"
+  },
+  {
+    "name": "STFT",
+    "strategy": "SuspiciousTitForTat"
+  },
+  {
+    "name": "Psycho",
+    "strategy": "Psycho"
+  }
+]

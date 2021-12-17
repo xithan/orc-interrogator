@@ -1,10 +1,10 @@
 {
-  "prisoners": "orcs-test",
+  "prisoners": "strategy-pool",
   "bothCooperate": 2,
   "bothBetrayed": 4,
   "betraying": 1,
   "betrayed": 6,
-  "turns": 500,
+  "turns":50,
   "msPerTurn": 0.5
 }
 

@@ -1,0 +1,44 @@
+@inject HttpClient Http;
+@inject IJSRuntime JsRuntime;
+@using Interrogator.Game
+@using Round = Interrogator.Game.Round
+@using System.Runtime.Serialization
+@using Interrogator.Game.Analysis
+@using System.Runtime.CompilerServices
+@using Newtonsoft.Json
+@using Duel = Interrogator.Game.Duel
+
+<VegaChart SpecFile="sentence.vg.json" Title="Sentence received from each duel" Height="@Height" Data="@SentenceData" />
+
+@code {
+
+    private string SentenceData => JsonConvert.SerializeObject(this.CollectData());
+
+    private int Height => PrisonManager.ActivePrison.Prisoners.Count * PrisonManager.ActivePrison.Prisoners.Count * 20;
+
+    [Inject] 
+    private PrisonManager PrisonManager { get; set; }
+    
+    [Parameter]
+    public int RoundId { get; set; }
+
+    private SentenceDataPoint[] CreateDataPoints(Duel duel, int roundNumber)
+    {
+        var p2 = duel.Participants.Item2;
+        var p1 = duel.Participants.Item1;
+        var name1 = p1.Prisoner.Name;
+        var name2 = p2.Prisoner.Name;
+        return new[]
+        {
+            new SentenceDataPoint(name1, roundNumber, name2, p1.Sentence),
+            new SentenceDataPoint(name2, roundNumber, name1, p2.Sentence)
+        };
+    }
+    private IEnumerable<SentenceDataPoint> CollectData()
+    {
+        var data = PrisonManager.Rounds.SelectMany(r => r.Duels.Select(d => (d, r.Number)))
+            .SelectMany((pair, i) => this.CreateDataPoints(pair.d, pair.Number));
+        Console.WriteLine(JsonConvert.SerializeObject(data));
+        return data;
+    }
+    }

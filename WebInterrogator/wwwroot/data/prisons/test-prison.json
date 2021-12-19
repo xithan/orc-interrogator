@@ -5,7 +5,7 @@
   "bothBetrayed": 4,
   "betraying": 1,
   "betrayed": 6,
-  "turns":50,
+  "turns":600,
   "msPerTurn": 0.5
 }
 

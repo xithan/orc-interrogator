@@ -33,6 +33,7 @@ a, .btn-link {
 
 .content {
     padding-top: 1.1rem;
+    padding-bottom: 10rem;
 }
 
 .valid.modified:not([type=checkbox]) {
@@ -103,6 +104,9 @@ a, .btn-link {
     align-items: start;
 }
 
+.compact {
+    overflow: auto;
+}
 
 .compact .info {
     padding: 0;
@@ -141,6 +145,8 @@ a, .btn-link {
     border: 1px solid #b134d3;
     padding: 0.5rem 0.9rem 0.5rem 0.9rem;
     width: 4rem;
+    min-width: 4rem;
+    max-width: 4rem;
     background-color: #522398;
     color: #fff;
     box-shadow: 7px 3px 3px black;
@@ -168,7 +174,7 @@ a, .btn-link {
     display: flex;
     border: 1px solid #b134d3;
     border-left: none;
-    overflow: hidden;
+    overflow: visible;
     height: 25px;
 }
 .first .answers {

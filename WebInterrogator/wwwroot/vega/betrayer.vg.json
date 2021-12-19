@@ -42,7 +42,7 @@
     {
       "name": "legend_labels",
       "type": "ordinal",
-      "domain": ["Betrayed Cooperator", "Both betrayed", "Cooperated with Betrayor", "Both cooperated"] ,
+      "domain": ["Betrayed a Cooperator", "Betrayed a Betrayor", "Cooperated with Betrayor", "Cooperated with Cooperator"] ,
       "range": ["#510483", "#7114a3", "#d154f3", "#e174ff"]
     }
   ],

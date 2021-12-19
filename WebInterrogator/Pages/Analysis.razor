@@ -13,14 +13,13 @@
 @if (PrisonManager.IsGameFinished)
 {
     <Card Title="Worst Traitor">
-        <TraitorChart/>
-    </Card>
-    
-    <Card Title="Sentence received from each duel">
-       <SentenceTable/>
-        <SentenceBarChart/>
-    </Card>
-    
+            <TraitorChart/>
+        </Card>
+        
+        <Card Title="Sentence received from each duel">
+           <SentenceTable/>
+            <SentenceBarChart/>
+        </Card>
     <Card Title="History">
         <div class="compact text-dark">
             @if (PrisonManager.Rounds != null)

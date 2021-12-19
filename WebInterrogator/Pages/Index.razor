@@ -60,7 +60,14 @@
     private void AskForSeed()
     {
         this._spin = true;
-        this._askForSeed = true;
+        if (this.PrisonManager.ActivePrison.NumberOfTurns == 0)
+        {
+            this._askForSeed = true;    
+        }
+        else
+        {
+            this._seeded = true;
+        }
     }
     
     private bool _askForSeed;

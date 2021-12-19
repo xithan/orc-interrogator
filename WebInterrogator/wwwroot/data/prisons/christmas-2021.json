@@ -1,0 +1,11 @@
+{
+  "name": "Christmas Prison 2021",
+  "prisoners": "orcs-2021",
+  "bothCooperate": 2,
+  "bothBetrayed": 4,
+  "betraying": 1,
+  "betrayed": 6,
+  "turns":50,
+  "msPerTurn": 0.5
+}
+

@@ -1,5 +1,6 @@
 ﻿@using Interrogator.Game
 @using Interrogator.Game.Setup
+@using System.Collections
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Orc Interrogator</h5>
@@ -28,25 +29,38 @@
                 </NavLink>
             </li>
         </ul>
-        @if (PrisonManager.ActivePrison != null)
+        @if (ActivePrison != null)
         {
+            <h6 class="navbar-text">Ranking</h6>
             <Ranking Prisoners="@PrisonManager.ActivePrison.Prisoners"></Ranking>  
         }
             
         <h6 class="navbar-text">Configuration</h6>
-         @if (PrisonManager.ActivePrison != null)
+         @if (ActivePrison != null)
                 {
                     <Config Prison="@PrisonManager.ActivePrison"></Config>  
                 }
         <form class="d-flex">
-            <input @bind="PrisonToLoad" class="form-control me-2" type="text" placeholder="Prison" aria-label="Search">
-            <button @onclick="Load" class="btn btn-outline-success">Load</button>
+            <select class="custom-select" placeholder="Prison" @bind="PrisonToLoad">
+                <option selected>Select Prison</option>
+                @foreach (var (value, name) in PrisonManager.Prisons)
+                {
+                    <option value="@value">@name</option>
+                }
+            </select>
+            <button @onclick="Load" class="btn btn-outline-primary ms-3">Load</button>
         </form>
     </div>
 </div>
 
 
 @code {
+    protected override Task OnInitializedAsync()
+    {
+        PrisonManager.PrisonChanged += (obj) => StateHasChanged();
+        return base.OnInitializedAsync();
+    }
+
     private Prison ActivePrison => this.PrisonManager.ActivePrison;
 
     private string PrisonToLoad { get; set; }
@@ -62,6 +76,7 @@
     
     private async void Load()
     {
+        Console.WriteLine(Selected);
         Console.WriteLine(PrisonToLoad);
         Navigation.NavigateTo($"prison/{this.PrisonToLoad}");
     }
@@ -71,9 +86,11 @@
         var pseudonym = new Dictionary<string, string>();
         this.PrisonManager.ActivePrison.Prisoners.ForEach(p =>
         {
-            p.Name = "A";
+            p.Name = "Anonymous";
         });
         this.PrisonManager.FastRun();
     }
+
+    public string? Selected { get; set; }
 
 }

@@ -5,7 +5,7 @@
 
     using Interrogator.Game;
 
-    public class Um : IStrategy
+    public class UM : IStrategy
     {
         private bool _opponentHasBetrayed;
 

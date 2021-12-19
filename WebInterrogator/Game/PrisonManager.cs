@@ -5,6 +5,15 @@ namespace Interrogator.Game;
 
 public class PrisonManager
 {
+    public static readonly Dictionary<string, string> Prisons = new() {
+        { "christmas-2021", "Christmas 2021" },
+        { "full-prison", "Full Prison" },
+        { "test-prison", "Test Prison" },
+        { "slow-prison", "Slow Prison" }
+    };
+    
+    public delegate void PrisonChangedEventHandler(object sender);
+    public event PrisonChangedEventHandler PrisonChanged;
     public Prison ActivePrison { get; private set; }
     
     public List<Round> Rounds { get; private set; }
@@ -27,6 +36,7 @@ public class PrisonManager
     public void InitializeNewGame(Prison prison)
     {
         this.ActivePrison = prison;
+        PrisonChanged.Invoke(this);
         PrepareGame();
     }
 

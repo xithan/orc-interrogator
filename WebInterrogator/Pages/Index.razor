@@ -20,13 +20,14 @@
     else if (this._seeded)
     {
         <div class="d-flex justify-content-center flex-column align-items-center">
-        <span class="my-2">Number of Turns: @PrisonManager.ActivePrison.NumberOfTurns</span>
+            <span class="my-2">Rounds: @PrisonManager.TotalRoundCount</span>
+            <span class="my-2">Turns per Round: @PrisonManager.ActivePrison.NumberOfTurns</span>
             <a class="btn btn-purple btn-circle start d-flex justify-content-center align-items-center my-2" href="interrogate">Start</a>
-     </div>
+        </div>
     }
     else if (PrisonManager.ActivePrison != null)
     {
-        <a class="btn btn-purple btn-circle-lg start d-flex justify-content-center align-items-center" @onclick="AskForSeed">@PrisonManager.ActivePrison.Name</a>
+        <a class="btn btn-purple btn-circle-lg d-flex justify-content-center align-items-center" @onclick="AskForSeed">@PrisonManager.ActivePrison.Name</a>
     }
 </Wheel>
 <div class="d-flex justify-content-center align-items-center title-row">

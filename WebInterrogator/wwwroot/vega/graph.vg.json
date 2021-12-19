@@ -6,7 +6,7 @@
   "padding": 2,
 
   "signals": [
-    { "name": "cellSize", "value": 30 },
+    { "name": "cellSize", "value": 35 },
     { "name": "count", "update": "length(data('nodes'))" },
     { "name": "width", "update": "span(range('position'))" },
     { "name": "height", "update": "width" },

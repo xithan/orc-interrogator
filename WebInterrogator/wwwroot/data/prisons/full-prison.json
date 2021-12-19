@@ -1,0 +1,11 @@
+{
+  "name": "Test Prison",
+  "prisoners": "all",
+  "bothCooperate": 2,
+  "bothBetrayed": 4,
+  "betraying": 1,
+  "betrayed": 6,
+  "turns":50,
+  "msPerTurn": 0.5
+}
+

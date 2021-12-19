@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Ath",
+    "strategy": "AThStrategy"
+  },
+  {
+    "name": "PK",
+    "strategy": "PK"
+  },
+  {
+    "name": "UM",
+    "strategy": "UM"
+  },
+  {
+    "name": "BH",
+    "strategy": "BH"
+  },
+  {
+    "name": "JL",
+    "strategy": "JL"
+  },
+  {
+    "name": "RK",
+    "strategy": "RK"
+  },
+  {
+    "name": "PSt",
+    "strategy": "PSt"
+  },
+  {
+    "name": "SF",
+    "strategy": "SF"
+  }
+]

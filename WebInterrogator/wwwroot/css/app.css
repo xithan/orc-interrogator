@@ -187,7 +187,7 @@ a, .btn-link {
 
 .start {
     vertical-align: middle;
-    line-height: 2.7;
+    line-height: 2.5;
 }
 
 .btn-circle {
@@ -343,4 +343,11 @@ a.btn-purple:hover, .btn-purple:hover {
 .answers .badge.points {
     border-radius: 0;
     
+}
+
+.card .answers {
+    box-shadow: none;
+}
+.card .info {
+    box-shadow: none;
 }

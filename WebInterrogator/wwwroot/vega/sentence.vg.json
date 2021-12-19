@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Sentence received from each duel",
-  "width": 800,
+  "width": 600,
   "padding": 30,
   "data": [
     {
@@ -29,7 +29,7 @@
     {
       "name": "color",
       "type": "ordinal",
-      "domain": {"data": "table", "field": "Position"},
+      "domain": {"data": "table", "field": "Prisoner"},
       "range": {"scheme": "category20"}
     }
   ],
@@ -81,7 +81,7 @@
               "height": {"scale": "pos", "band": 1},
               "x": {"scale": "xscale", "field": "Sentence"},
               "x2": {"scale": "xscale", "value": 0},
-              "fill": {"scale": "color", "field": "Position"}
+              "fill": {"scale": "color", "field": "Opponent"}
             }
           }
         },

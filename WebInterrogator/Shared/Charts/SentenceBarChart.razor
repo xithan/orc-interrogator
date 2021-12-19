@@ -38,7 +38,7 @@
     {
         var data = PrisonManager.Rounds.SelectMany(r => r.Duels.Select(d => (d, r.Number)))
             .SelectMany((pair, i) => this.CreateDataPoints(pair.d, pair.Number));
-        Console.WriteLine(JsonConvert.SerializeObject(data));
+        Console.WriteLine(JsonConvert.SerializeObject(data.OrderBy(p => p.Opponent)));
         return data;
     }
     }

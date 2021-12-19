@@ -29,7 +29,7 @@
     {
       "name": "color",
       "type": "ordinal",
-      "domain": {"data": "table", "field": "Prisoner"},
+      "domain": {"data": "table", "field": "Opponent"},
       "range": {"scheme": "category20"}
     }
   ],

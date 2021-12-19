@@ -19,6 +19,9 @@
     [Parameter] 
     public string Edges { get; set; }
     
+    [Parameter] 
+    public string Slots { get; set; }
+    
     [Parameter]
     public int Height { get; set; }
     
@@ -33,6 +36,6 @@
         var spec = await Http.GetStringAsync($"vega/{SpecFile}");
         await JsRuntime.InvokeAsync<Object>(
             "VegaHelper.setupGraph", 
-            new { spec = spec, nodes = Nodes, edges = Edges, containerSelector = $"#{_containerId}", height = Height});
+            new { spec = spec, nodes = Nodes, edges = Edges, slots = Slots, containerSelector = $"#{_containerId}", height = Height});
     }
 }

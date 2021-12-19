@@ -13,7 +13,7 @@ window.VegaHelper = {
     setupGraph: function (props) {
         var view;
 
-        function render(spec, nodes, edges, containerSelector, height)
+        function render(spec, nodes, edges, slots, containerSelector, height)
         {
             view = createView(view, spec, containerSelector, height);
 
@@ -21,10 +21,13 @@ window.VegaHelper = {
             view.change("nodes", nodeChangeset)
             let edgeChangeset = vega.changeset().remove(() => true).insert(edges);
             view.change("edges", edgeChangeset)
+            let slotChangeset = vega.changeset().remove(() => true).insert(slots);
+            view.change("slots", slotChangeset)
             return view.run()
         }
 
-        render(JSON.parse(props.spec), JSON.parse(props.nodes), JSON.parse(props.edges), 
+        render(JSON.parse(props.spec), JSON.parse(props.nodes), JSON.parse(props.edges),
+            JSON.parse(props.slots),
             props.containerSelector, props.height);
     },
     

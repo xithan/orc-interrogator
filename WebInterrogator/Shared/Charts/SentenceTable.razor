@@ -9,12 +9,14 @@
 @using Duel = Interrogator.Game.Duel
 
 <VegaGraph SpecFile="graph.vg.json" Title="Sentences" Height="@Height" Nodes="@Nodes"
-           Edges="@Edges"/>
+           Edges="@Edges" Slots="@Slots"/>
 
 @code {
     private string Nodes => JsonConvert.SerializeObject(this.CollectNodes());
     
     private string Edges => JsonConvert.SerializeObject(this.CollectEdges());
+    
+    private string Slots => JsonConvert.SerializeObject(this.CollectSlots());
 
     private int Height => PrisonManager.ActivePrison.Prisoners.Count * PrisonManager.ActivePrison.Prisoners.Count * 20;
 
@@ -27,6 +29,12 @@
             .Select(p => new Node(p.Name, p.Index));
         Console.WriteLine(JsonConvert.SerializeObject(nodes));
         return nodes;
+    }
+    
+    private IEnumerable<string> CollectSlots()
+    {
+        return Enumerable.Range(0, 10).Select(i =>
+            $"{PrisonManager.GetMinSentence() + i * Normalizer} - {PrisonManager.GetMinSentence() + (i + 1) * Normalizer}");
     }
 
     private IEnumerable<Edge> CollectEdges()

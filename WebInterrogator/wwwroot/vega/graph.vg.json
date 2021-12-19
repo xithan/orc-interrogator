@@ -67,6 +67,10 @@
       ]
     },
     {
+      "name": "slots",
+      "values": ["0 - 10", "10 -100 " , "1000 -123213"]
+    },
+    {
       "name": "cross",
       "source": "nodes",
       "transform": [
@@ -93,9 +97,24 @@
         ],
         "sort": true
       }
+    },
+    
+    {
+      "name": "legend_labels",
+      "type": "ordinal",
+      "domain": {"data" : "slots", "field": "data"} ,
+      "range": {"scheme": "purples"}
     }
   ],
 
+  "legends": [
+    {
+      "stroke": "legend_labels",
+      "fill": "legend_labels",
+      "title": "Sentence"
+    }
+  ],
+  
   "marks": [
     {
       "type": "rect",

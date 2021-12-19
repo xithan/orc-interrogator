@@ -1,0 +1,88 @@
+@inject HttpClient Http;
+@inject IJSRuntime JsRuntime;
+@using Interrogator.Game
+@using Round = Interrogator.Game.Round
+@using System.Runtime.Serialization
+@using Interrogator.Game.Analysis
+@using System.Runtime.CompilerServices
+@using Interrogator.Game.Setup
+@using Newtonsoft.Json
+@using Duel = Interrogator.Game.Duel
+
+<VegaChart SpecFile="betrayer.vg.json" Title="Worst Traitor" Height="@Height" Data="@Data" />
+
+@code {
+    private string Data
+    {
+        get
+        {
+            var data = JsonConvert.SerializeObject(this.CollectData());
+            Console.WriteLine(data);
+            return data;
+        }
+    }
+
+    private int Height => 500;
+
+    [Inject] 
+    private PrisonManager PrisonManager { get; set; }
+
+    private void AddDataPoints(Duel duel, Dictionary<(Prisoner,int), int> dic)
+    {
+        var p2 = duel.Participants.Item2;
+        var p1 = duel.Participants.Item1;
+        var name1 = p1.Prisoner.Name;
+        var name2 = p2.Prisoner.Name;
+        
+        foreach (var (m1, m2) in p1.Moves.Zip(p2.Moves))
+        {
+            if (m1 == Move.Betray && m2 == Move.Cooperate)
+            {
+                this.Increment(p1.Prisoner, 0, dic);
+                this.Increment(p2.Prisoner, 2, dic);
+            }
+            else if (m1 == Move.Cooperate && m2 == Move.Betray)
+            {
+                this.Increment(p1.Prisoner, 2, dic);
+                this.Increment(p2.Prisoner, 0, dic);
+            }
+            else if (m1 == Move.Betray && m2 == Move.Betray)
+            {
+                this.Increment(p2.Prisoner, 1, dic);
+                this.Increment(p1.Prisoner, 1, dic);
+            }
+            else
+            {
+                this.Increment(p2.Prisoner, 3, dic);
+                this.Increment(p1.Prisoner, 3, dic);
+            }
+        }
+    }
+
+    private void Increment(Prisoner p, int moveType, Dictionary<(Prisoner,int), int> dic)
+    {
+        var key = (p, moveType);
+        if (dic.TryGetValue(key, out var oldCount ))
+        {
+            dic[key] = oldCount + 1;
+        }
+        else
+        {
+            dic[key] = 1;
+        }
+    }
+
+    private IEnumerable<TraitorDataPoint> CollectData()
+    {
+        var dic = new Dictionary<(Prisoner,int), int>();
+        foreach (var duel in PrisonManager.GetAllDuels())
+        {
+            this.AddDataPoints(duel, dic);
+        }
+        var turnCount = this.PrisonManager.TotalRoundCount * this.PrisonManager.ActivePrison.NumberOfTurns;
+        return dic.Select(pair => new TraitorDataPoint(pair.Key.Item1.Name, pair.Key.Item2, pair.Value, 
+            (pair.Value / turnCount) * 100)).ToList()
+            .OrderBy(x => x.MoveType).ThenByDescending<TraitorDataPoint, int>(y => y.Count);
+    }
+
+}

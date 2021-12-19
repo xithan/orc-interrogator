@@ -10,6 +10,7 @@ namespace Interrogator.Game.Setup
             this.Prisoners = prisoners.ToList();
             this.NumberOfTurns = prisonConfig.Turns ?? this.GetRandomTurnCount();
             this.ConfigureSpeed(prisonConfig.MsPerTurn);
+            this.Name = prisonConfig.Name;
             
             Console.WriteLine($"Points: {prisonConfig.BothCooperate}");
             this.PayoffCalculator = new PayoffCalculator(
@@ -37,6 +38,7 @@ namespace Interrogator.Game.Setup
             }
         }
 
+        public string Name { get; private set; }
         public PayoffCalculator PayoffCalculator { get; }
 
         public List<Prisoner> Prisoners { get; }
@@ -45,7 +47,7 @@ namespace Interrogator.Game.Setup
         
         public int TurnsPerMs { get; private set; }
 
-        public int NumberOfTurns { get; }
+        public int NumberOfTurns { get; private set; }
         
         public void ResetStrategies()
         {
@@ -58,8 +60,15 @@ namespace Interrogator.Game.Setup
             return r.Next(Prison.MIN_TURN_COUNT, Prison.MAX_TURN_COUNT);
         }
         
+        public void SetRandomTurnCount(int seed)
+        {
+            var r = new Random(seed);
+            this.NumberOfTurns = r.Next(Prison.MIN_TURN_COUNT, Prison.MAX_TURN_COUNT);
+        }
+        
         public List<Round> CreateRounds()
         {
+            Console.WriteLine("creating rounds");
             var rounds = new List<Round>();
             var odd = false;
             if (this.Prisoners.Count % 2 == 1)
@@ -67,6 +76,7 @@ namespace Interrogator.Game.Setup
                 odd = true;
                 this.Prisoners.Insert(0, null);
             }
+            Console.WriteLine($"Prisoners count {Prisoners.Count}");
             var half = this.Prisoners.Count / 2;
             
             for (var roundCount = 1; roundCount < this.Prisoners.Count; roundCount++)

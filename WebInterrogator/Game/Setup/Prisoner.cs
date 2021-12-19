@@ -6,11 +6,12 @@ namespace Interrogator.Game.Setup
     {
         private Type _strategyType;
         
-        public Prisoner(string name, string strategyName)
+        public Prisoner(string name, string strategyName, int index)
         {
             this.Name = name;
             this._strategyType = Type.GetType($"Interrogator.Strategies.{strategyName}") ??
                                  throw new ArgumentException($"Couldn't find type {strategyName}");
+            this.Index = index;
             this.ResetStrategy();
         }
 
@@ -19,8 +20,9 @@ namespace Interrogator.Game.Setup
             this.Strategy = (IStrategy)Activator.CreateInstance(this._strategyType) ??
                             throw new ArgumentException($"Couldn't load {this._strategyType}");
         }
-        public string Name { get; }
-
+        public string Name { get; set; }
+        
+        public int Index { get; }
         public int TotalSentence { get; set; }
         public double DuelWins { get; set; }
         

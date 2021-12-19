@@ -13,20 +13,32 @@ public class PrisonManager
     
     public int TotalRoundCount => this.Rounds?.Count ?? 0;
     
-    public Round CurrentRound => this.Rounds[this.CurrentRoundIndex];
+    public Round CurrentRound =>
+        this.CurrentRoundIndex < this.TotalRoundCount ? this.Rounds[this.CurrentRoundIndex] : null;
     
     public bool IsRoundFinished => this._currentTurn > this.ActivePrison.NumberOfTurns;
+
+    public bool IsGameFinished =>  TotalRoundCount > 0 && this.CurrentRoundIndex >= this.TotalRoundCount;
     
     private int _currentTurn;
+    
+    private IList<Participant> _allParticipants;
 
     public void InitializeNewGame(Prison prison)
     {
         this.ActivePrison = prison;
+        PrepareGame();
+    }
+
+    private void PrepareGame()
+    {
         this.Rounds = this.ActivePrison.CreateRounds();
+        this._allParticipants = this.Rounds.SelectMany(r => r.Duels)
+            .SelectMany(d => new[] { d.Participants.Item1, d.Participants.Item2} ).ToList();
         this.CurrentRoundIndex = 0;
         this._currentTurn = 1;
     }
-    
+
     public void PrepareNextRound()
     {
         this.ActivePrison.ResetStrategies();
@@ -34,19 +46,42 @@ public class PrisonManager
         this._currentTurn = 1;
     }
 
+    public void FastRun()
+    {
+        while(!IsGameFinished)
+        {
+            RunRoundInterrogations();
+            FinishRound();
+            PrepareNextRound();
+        }
+    }
+
+    private void RunRoundInterrogations()
+    {
+        for(var i = 0; i < this.ActivePrison.NumberOfTurns; i++)
+        {
+            RunTurnInterrogations();
+        }
+    }
+
     public void RunTurnBatch()
     {
         for (var x = 0; x < this.ActivePrison.TurnsPerMs; x++)
         {
-            foreach (var duel in this.CurrentRound.Duels)
-            {
-                duel.Interrogate(this._currentTurn, this.ActivePrison.PayoffCalculator);
-            }
-            this._currentTurn += 1;
+            RunTurnInterrogations();
         }
        
     }
     
+    private void RunTurnInterrogations()
+    {
+        foreach (var duel in this.CurrentRound.Duels)
+        {
+            duel.Interrogate(this._currentTurn, this.ActivePrison.PayoffCalculator);
+        }
+        this._currentTurn += 1;
+    }
+
     public void FinishRound()
     {
         foreach (var duel in this.CurrentRound.Duels)
@@ -72,5 +107,20 @@ public class PrisonManager
     public IEnumerable<Duel> GetAllDuels()
     {
         return this.Rounds.SelectMany(r => r.Duels);
+    }
+
+    public int GetMaxSentence()
+    {
+        return this.GetAllParticipants().Max(p => p.Sentence);
+    }
+    
+    public int GetMinSentence()
+    {
+        return this.GetAllParticipants().Min(p => p.Sentence);
+    }
+    
+    public IEnumerable<Participant> GetAllParticipants()
+    {
+        return this._allParticipants;
     }
 }

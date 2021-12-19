@@ -19,7 +19,7 @@ else
     }
     else if (ShowNextButton)
     {
-        <button class="btn btn-purple mt-3" @onclick="Next">Continue</button>    
+        <button class="btn btn-purple mt-3" @onclick="Next">Continue</button> 
     }
 }
 
@@ -84,7 +84,8 @@ else
         this.PrisonManager.FinishRound();
         this.Navigation.NavigateTo("break");
     }
-    
+
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         base.OnAfterRenderAsync(firstRender);

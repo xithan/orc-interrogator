@@ -1,0 +1,182 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "A re-orderable adjacency matrix depicting character co-occurrence in the novel Les Misérables.",
+  "width": 770,
+  "height": 770,
+  "padding": 2,
+
+  "signals": [
+    { "name": "cellSize", "value": 30 },
+    { "name": "count", "update": "length(data('nodes'))" },
+    { "name": "width", "update": "span(range('position'))" },
+    { "name": "height", "update": "width" },
+    {
+      "name": "src", "value": {},
+      "on": [
+        {"events": "text:mousedown", "update": "datum"},
+        {"events": "window:mouseup", "update": "{}"}
+      ]
+    },
+    {
+      "name": "dest", "value": -1,
+      "on": [
+        {
+          "events": "[@columns:mousedown, window:mouseup] > window:mousemove",
+          "update": "src.name && datum !== src ? (0.5 + count * clamp(x(), 0, width) / width) : dest"
+        },
+        {
+          "events": "[@rows:mousedown, window:mouseup] > window:mousemove",
+          "update": "src.name && datum !== src ? (0.5 + count * clamp(y(), 0, height) / height) : dest"
+        },
+        {"events": "window:mouseup", "update": "-1"}
+      ]
+    }
+  ],
+
+  "data": [
+    {
+      "name": "nodes", 
+      "values": [{"x":"F4","y":446,"c":0},{"x":"Evil","y":439,"c":0},{"x":"F3","y":422,"c":0},{"x":"EvilRando","y":340,"c":0},{"x":"Psycho","y":340,"c":0},{"x":"Grudge","y":273,"c":0},{"x":"Rando","y":259,"c":0},{"x":"PK","y":250,"c":0},{"x":"STFT","y":165,"c":0},{"x":"NiceRando","y":164,"c":0},{"x":"2TFT","y":151,"c":0},{"x":"TFT","y":149,"c":0},{"x":"TF2T","y":29,"c":0},{"x":"Evil","y":980,"c":1},{"x":"F4","y":959,"c":1},{"x":"F3","y":957,"c":1},{"x":"STFT","y":668,"c":1},{"x":"EvilRando","y":628,"c":1},{"x":"2TFT","y":589,"c":1},{"x":"Grudge","y":588,"c":1},{"x":"PK","y":482,"c":1},{"x":"Rando","y":463,"c":1},{"x":"TFT","y":453,"c":1},{"x":"NiceRando","y":251,"c":1},{"x":"TF2T","y":213,"c":1},{"x":"Psycho","y":181,"c":1},{"x":"Psycho","y":712,"c":2},{"x":"Nice","y":602,"c":2},{"x":"NiceRando","y":598,"c":2},{"x":"Rando","y":445,"c":2},{"x":"TF2T","y":354,"c":2},{"x":"EvilRando","y":295,"c":2},{"x":"STFT","y":159,"c":2},{"x":"TFT","y":154,"c":2},{"x":"2TFT","y":58,"c":2},{"x":"F3","y":22,"c":2},{"x":"PK","y":11,"c":2},{"x":"F4","y":9,"c":2},{"x":"Grudge","y":8,"c":2},{"x":"TF2T","y":823,"c":3},{"x":"Nice","y":817,"c":3},{"x":"PK","y":676,"c":3},{"x":"TFT","y":663,"c":3},{"x":"2TFT","y":621,"c":3},{"x":"Grudge","y":550,"c":3},{"x":"STFT","y":427,"c":3},{"x":"NiceRando","y":406,"c":3},{"x":"Rando","y":252,"c":3},{"x":"Psycho","y":186,"c":3},{"x":"EvilRando","y":156,"c":3},{"x":"F3","y":18,"c":3},{"x":"F4","y":5,"c":3}],
+      "transform": [
+        {
+          "type": "formula", "as": "order",
+          "expr": "datum.index"
+        },
+        {
+          "type": "formula", "as": "score",
+          "expr": "dest >= 0 && datum === src ? dest : datum.order"
+        },
+        {
+          "type": "window", "sort": {"field": "score"},
+          "ops": ["row_number"], "as": ["order"]
+        }
+      ]
+    },
+    {
+      "name": "edges",
+      "values": [{"source":0,"target":13,"value":0},{"source":13,"target":0,"value":10},{"source":1,"target":12,"value":6},{"source":12,"target":1,"value":6},{"source":2,"target":11,"value":2},{"source":11,"target":2,"value":2},{"source":3,"target":10,"value":2},{"source":10,"target":3,"value":2},{"source":4,"target":9,"value":2},{"source":9,"target":4,"value":2},{"source":5,"target":8,"value":2},{"source":8,"target":5,"value":8},{"source":6,"target":7,"value":5},{"source":7,"target":6,"value":4},{"source":0,"target":12,"value":6},{"source":12,"target":0,"value":6},{"source":13,"target":11,"value":5},{"source":11,"target":13,"value":3},{"source":1,"target":10,"value":3},{"source":10,"target":1,"value":8},{"source":2,"target":9,"value":2},{"source":9,"target":2,"value":2},{"source":3,"target":8,"value":3},{"source":8,"target":3,"value":3},{"source":4,"target":7,"value":7},{"source":7,"target":4,"value":0},{"source":5,"target":6,"value":3},{"source":6,"target":5,"value":7},{"source":0,"target":11,"value":5},{"source":11,"target":0,"value":5},{"source":12,"target":10,"value":2},{"source":10,"target":12,"value":2},{"source":13,"target":9,"value":9},{"source":9,"target":13,"value":0},{"source":1,"target":8,"value":1},{"source":8,"target":1,"value":8},{"source":2,"target":7,"value":3},{"source":7,"target":2,"value":7},{"source":3,"target":6,"value":4},{"source":6,"target":3,"value":4},{"source":4,"target":5,"value":9},{"source":5,"target":4,"value":0},{"source":0,"target":10,"value":2},{"source":10,"target":0,"value":7},{"source":11,"target":9,"value":1},{"source":9,"target":11,"value":1},{"source":12,"target":8,"value":3},{"source":8,"target":12,"value":3},{"source":13,"target":7,"value":6},{"source":7,"target":13,"value":2},{"source":1,"target":6,"value":3},{"source":6,"target":1,"value":6},{"source":2,"target":5,"value":5},{"source":5,"target":2,"value":5},{"source":3,"target":4,"value":1},{"source":4,"target":3,"value":1},{"source":0,"target":9,"value":5},{"source":9,"target":0,"value":5},{"source":10,"target":8,"value":4},{"source":8,"target":10,"value":1},{"source":11,"target":7,"value":4},{"source":7,"target":11,"value":6},{"source":12,"target":6,"value":4},{"source":6,"target":12,"value":4},{"source":13,"target":5,"value":9},{"source":5,"target":13,"value":0},{"source":1,"target":4,"value":0},{"source":4,"target":1,"value":9},{"source":2,"target":3,"value":1},{"source":3,"target":2,"value":1},{"source":0,"target":8,"value":1},{"source":8,"target":0,"value":8},{"source":9,"target":7,"value":4},{"source":7,"target":9,"value":7},{"source":10,"target":6,"value":5},{"source":6,"target":10,"value":2},{"source":11,"target":5,"value":5},{"source":5,"target":11,"value":5},{"source":12,"target":4,"value":1},{"source":4,"target":12,"value":2},{"source":13,"target":3,"value":4},{"source":3,"target":13,"value":4},{"source":1,"target":2,"value":5},{"source":2,"target":1,"value":5},{"source":0,"target":7,"value":4},{"source":7,"target":0,"value":6},{"source":8,"target":6,"value":5},{"source":6,"target":8,"value":3},{"source":9,"target":5,"value":5},{"source":5,"target":9,"value":5},{"source":10,"target":4,"value":1},{"source":4,"target":10,"value":1},{"source":11,"target":3,"value":1},{"source":3,"target":11,"value":1},{"source":12,"target":2,"value":2},{"source":2,"target":12,"value":2},{"source":13,"target":1,"value":9},{"source":1,"target":13,"value":0},{"source":0,"target":6,"value":2},{"source":6,"target":0,"value":7},{"source":7,"target":5,"value":7},{"source":5,"target":7,"value":3},{"source":8,"target":4,"value":1},{"source":4,"target":8,"value":4},{"source":9,"target":3,"value":1},{"source":3,"target":9,"value":1},{"source":10,"target":2,"value":1},{"source":2,"target":10,"value":1},{"source":11,"target":1,"value":5},{"source":1,"target":11,"value":5},{"source":12,"target":13,"value":4},{"source":13,"target":12,"value":4},{"source":0,"target":5,"value":5},{"source":5,"target":0,"value":5},{"source":6,"target":4,"value":0},{"source":4,"target":6,"value":6},{"source":7,"target":3,"value":5},{"source":3,"target":7,"value":5},{"source":8,"target":2,"value":7},{"source":2,"target":8,"value":2},{"source":9,"target":1,"value":5},{"source":1,"target":9,"value":5},{"source":10,"target":13,"value":6},{"source":13,"target":10,"value":1},{"source":11,"target":12,"value":5},{"source":12,"target":11,"value":5},{"source":0,"target":4,"value":0},{"source":4,"target":0,"value":9},{"source":5,"target":3,"value":5},{"source":3,"target":5,"value":5},{"source":6,"target":2,"value":7},{"source":2,"target":6,"value":3},{"source":7,"target":1,"value":6},{"source":1,"target":7,"value":4},{"source":8,"target":13,"value":7},{"source":13,"target":8,"value":2},{"source":9,"target":12,"value":5},{"source":12,"target":9,"value":5},{"source":10,"target":11,"value":1},{"source":11,"target":10,"value":1},{"source":0,"target":3,"value":5},{"source":3,"target":0,"value":5},{"source":4,"target":2,"value":1},{"source":2,"target":4,"value":1},{"source":5,"target":1,"value":5},{"source":1,"target":5,"value":5},{"source":6,"target":13,"value":4},{"source":13,"target":6,"value":3},{"source":7,"target":12,"value":5},{"source":12,"target":7,"value":5},{"source":8,"target":11,"value":4},{"source":11,"target":8,"value":2},{"source":9,"target":10,"value":1},{"source":10,"target":9,"value":1},{"source":0,"target":2,"value":5},{"source":2,"target":0,"value":5},{"source":3,"target":1,"value":5},{"source":1,"target":3,"value":5},{"source":4,"target":13,"value":9},{"source":13,"target":4,"value":0},{"source":5,"target":12,"value":5},{"source":12,"target":5,"value":5},{"source":6,"target":11,"value":6},{"source":11,"target":6,"value":3},{"source":7,"target":10,"value":2},{"source":10,"target":7,"value":6},{"source":8,"target":9,"value":8},{"source":9,"target":8,"value":1},{"source":0,"target":1,"value":5},{"source":1,"target":0,"value":5},{"source":2,"target":13,"value":0},{"source":13,"target":2,"value":9},{"source":3,"target":12,"value":5},{"source":12,"target":3,"value":4},{"source":4,"target":11,"value":1},{"source":11,"target":4,"value":1},{"source":5,"target":10,"value":2},{"source":10,"target":5,"value":7},{"source":6,"target":9,"value":8},{"source":9,"target":6,"value":2},{"source":7,"target":8,"value":2},{"source":8,"target":7,"value":6}],
+      "transform": [
+        {
+          "type": "lookup", "from": "nodes", "key": "index",
+          "fields": ["source", "target"], "as": ["sourceNode", "targetNode"]
+        },
+        {
+          "type": "formula", "as": "group",
+          "expr": "datum.sourceNode.group === datum.targetNode.group ? datum.sourceNode.group : count"
+        }
+      ]
+    },
+    {
+      "name": "cross",
+      "source": "nodes",
+      "transform": [
+        { "type": "cross" }
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "position",
+      "type": "band",
+      "domain": {"data": "nodes", "field": "order", "sort": true},
+      "range": {"step": {"signal": "cellSize"}}
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "range": {"scheme": "purples"},
+      "domain": {
+        "fields": [
+          {"data": "edges", "field": "value"},
+          {"signal": "count"}
+        ],
+        "sort": true
+      }
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "rect",
+      "from": {"data": "cross"},
+      "encode": {
+        "update": {
+          "x": {"scale": "position", "field": "a.order"},
+          "y": {"scale": "position", "field": "b.order"},
+          "width": {"scale": "position", "band": 1, "offset": -1},
+          "height": {"scale": "position", "band": 1, "offset": -1},
+          "fill": [
+            {"test": "datum.a === src || datum.b === src", "value": "#ddd"},
+            {"value": "#f5f5f5"}
+          ]
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {"data": "edges"},
+      "encode": {
+        "update": {
+          "x": {"scale": "position", "field": "sourceNode.order"},
+          "y": {"scale": "position", "field": "targetNode.order"},
+          "width": {"scale": "position", "band": 1, "offset": -1},
+          "height": {"scale": "position", "band": 1, "offset": -1},
+          "fill": {"scale": "color", "field": "value"}
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {"data": "edges"},
+      "encode": {
+        "update": {
+          "x": {"scale": "position", "field": "targetNode.order"},
+          "y": {"scale": "position", "field": "sourceNode.order"},
+          "width": {"scale": "position", "band": 1, "offset": -1},
+          "height": {"scale": "position", "band": 1, "offset": -1},
+          "fill": {"scale": "color", "field": "value"}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "name": "columns",
+      "from": {"data": "nodes"},
+      "encode": {
+        "update": {
+          "x": {"scale": "position", "field": "order", "band": 0.5},
+          "y": {"offset": -2},
+          "text": {"field": "name"},
+          "fontSize": {"value": 10},
+          "angle": {"value": -90},
+          "align": {"value": "left"},
+          "baseline": {"value": "middle"},
+          "fill": [
+            {"test": "datum === src", "value": "steelblue"},
+            {"value": "black"}
+          ]
+        }
+      }
+    },
+    {
+      "type": "text",
+      "name": "rows",
+      "from": {"data": "nodes"},
+      "encode": {
+        "update": {
+          "x": {"offset": -2},
+          "y": {"scale": "position", "field": "order", "band": 0.5},
+          "text": {"field": "name"},
+          "fontSize": {"value": 10},
+          "align": {"value": "right"},
+          "baseline": {"value": "middle"},
+          "fill": [
+            {"test": "datum === src", "value": "steelblue"},
+            {"value": "black"}
+          ]
+        }
+      }
+    }
+  ]
+}

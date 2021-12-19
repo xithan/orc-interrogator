@@ -2,6 +2,7 @@ namespace Interrogator.Game.Setup;
 
 public class PrisonConfig
 {
+    public string Name { get; set; }
     public int Betrayed { get; set; }
     
     public int Betraying { get; set; }

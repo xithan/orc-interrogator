@@ -21,7 +21,10 @@
     }
     
     [Parameter] 
-    public string Data { get; set; }
+    public string Nodes { get; set; }
+    
+    [Parameter] 
+    public string Edges { get; set; }
     
     [Parameter]
     public int Height { get; set; }
@@ -36,7 +39,7 @@
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         var spec = await Http.GetStringAsync($"vega/{SpecFile}");
         await JsRuntime.InvokeAsync<Object>(
-            "VegaHelper.setupTable", 
-            new { spec = spec, data = Data, containerSelector = $"#{_containerId}", height = Height});
+            "VegaHelper.setupGraph", 
+            new { spec = spec, nodes = Nodes, edges = Edges, containerSelector = $"#{_containerId}", height = Height});
     }
 }

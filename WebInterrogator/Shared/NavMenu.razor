@@ -13,8 +13,18 @@
                 </NavLink>
             </li>
             <li class="nav-item">
+                <NavLink class="nav-link" href="fastrun">
+                    <span class="oi oi-media-skip-forward" aria-hidden="true"></span> Fast Forward
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" @onclick="TestRun">
+                    <span class="oi oi-beaker" aria-hidden="true"></span> Test Run
+                </NavLink>
+            </li>
+            <li class="nav-item">
                 <NavLink class="nav-link" href="overview">
-                    <span class="oi oi-list" aria-hidden="true"></span> Overview
+                    <span class="oi oi-list" aria-hidden="true"></span> Analysis
                 </NavLink>
             </li>
         </ul>
@@ -53,8 +63,17 @@
     private async void Load()
     {
         Console.WriteLine(PrisonToLoad);
-        var prison = await Loader.LoadPrison(this.PrisonToLoad);
-        this.PrisonManager.InitializeNewGame(prison);
-        Navigation.NavigateTo($"load/{this.PrisonToLoad}");
+        Navigation.NavigateTo($"prison/{this.PrisonToLoad}");
     }
+
+    private void TestRun()
+    {
+        var pseudonym = new Dictionary<string, string>();
+        this.PrisonManager.ActivePrison.Prisoners.ForEach(p =>
+        {
+            p.Name = "A";
+        });
+        this.PrisonManager.FastRun();
+    }
+
 }

@@ -1,4 +1,5 @@
 {
+  "name": "Test Prison",
   "prisoners": "strategy-pool",
   "bothCooperate": 2,
   "bothBetrayed": 4,

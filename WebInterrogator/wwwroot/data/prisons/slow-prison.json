@@ -1,6 +1,10 @@
 {
+  "name": "Slow Prison",
   "prisoners": "orcs-test",
-  "points": [1, 4, 6, 10],
+  "bothCooperate": 2,
+  "bothBetrayed": 4,
+  "betraying": 1,
+  "betrayed": 6,
   "turns": 10,
   "msPerTurn": 300
 }

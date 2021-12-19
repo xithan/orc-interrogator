@@ -2,19 +2,37 @@
 @page "/start"
 @page "/prison/{Prison}"
 
+
 @using Interrogator.Game
 @using Interrogator.Game.Setup
 @using System.Text.Json.Serialization
 <div class="d-flex justify-content-center w-100">
     <h1>Orc Interrogator</h1>
 </div>
-<Wheel>
-    <a class="btn btn-purple start d-flex justify-content-center align-items-center" href="interrogate">Start</a>
+<Wheel Spin="@_spin">
+    @if (this._askForSeed)
+    {
+        <div class="d-flex justify-content-center flex-column align-items-center">
+            <input name="seed" @bind="SeedValue" class="form-control my-2 seed-input" placeholder="Seed" type="number"/>
+            <a class="btn btn-purple btn-circle start d-flex justify-content-center align-items-center my-2" @onclick="Seed">Seed</a>
+        </div>
+    }
+    else if (this._seeded)
+    {
+        <div class="d-flex justify-content-center flex-column align-items-center">
+        <span class="my-2">Number of Turns: @PrisonManager.ActivePrison.NumberOfTurns</span>
+            <a class="btn btn-purple btn-circle start d-flex justify-content-center align-items-center my-2" href="interrogate">Start</a>
+     </div>
+    }
+    else if (PrisonManager.ActivePrison != null)
+    {
+        <a class="btn btn-purple btn-circle-lg start d-flex justify-content-center align-items-center" @onclick="AskForSeed">@PrisonManager.ActivePrison.Name</a>
+    }
 </Wheel>
 <div class="d-flex justify-content-center align-items-center title-row">
     <h3>Prisoners</h3>
 </div>
-<div class="d-flex justify-content-center align-items-center">
+<div class="d-flex justify-content-center align-items-center flex-wrap">
     @if (PrisonManager.ActivePrison != null)
     {
         foreach (var prisoner in PrisonManager.ActivePrison.Prisoners)
@@ -31,8 +49,27 @@
 
 
 @code {
+    private bool _spin;
+    private void Seed()
+    {
+        this.PrisonManager.ActivePrison.SetRandomTurnCount(this.SeedValue);
+        this._askForSeed = false;
+        this._seeded = true;
+    }
+    private void AskForSeed()
+    {
+        this._spin = true;
+        this._askForSeed = true;
+    }
+    
+    private bool _askForSeed;
+    private bool _seeded;
+
     [Parameter]
     public string Prison { get; set; }
+    
+    [Inject]
+    public NavigationManager Navigation { get; set; }
     
     [Inject]
     private PrisonManager PrisonManager { get; set; }
@@ -46,4 +83,7 @@
         var prison = await Loader.LoadPrison(this.Prison);
         this.PrisonManager.InitializeNewGame(prison);
     }
+
+    public int SeedValue { get; set; }
+
 }

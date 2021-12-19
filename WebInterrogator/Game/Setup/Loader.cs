@@ -25,7 +25,7 @@ public class Loader
     public async Task<IEnumerable<Prisoner>> LoadPrisoners(string jsonFileName)
     {
         var prisonerConfig = await Http.GetFromJsonAsync<PrisonerConfig[]>($"data/prisoners/{jsonFileName}.json");
-        return prisonerConfig.Select(c => new Prisoner(c.Name, c.Strategy));
+        return prisonerConfig.Select((c, i) => new Prisoner(c.Name, c.Strategy, i));
     }
     
 }

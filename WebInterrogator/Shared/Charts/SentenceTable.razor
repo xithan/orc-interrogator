@@ -1,0 +1,59 @@
+@inject HttpClient Http;
+@inject IJSRuntime JsRuntime;
+@using Interrogator.Game
+@using Round = Interrogator.Game.Round
+@using System.Runtime.Serialization
+@using Interrogator.Game.Analysis
+@using System.Runtime.CompilerServices
+@using Newtonsoft.Json
+@using Duel = Interrogator.Game.Duel
+
+<VegaGraph SpecFile="graph.vg.json" Title="Sentences" Height="@Height" Nodes="@Nodes"
+           Edges="@Edges"/>
+
+@code {
+    private string Nodes => JsonConvert.SerializeObject(this.CollectNodes());
+    
+    private string Edges => JsonConvert.SerializeObject(this.CollectEdges());
+
+    private int Height => PrisonManager.ActivePrison.Prisoners.Count * PrisonManager.ActivePrison.Prisoners.Count * 20;
+
+    [Inject] 
+    private PrisonManager PrisonManager { get; set; }
+
+    private IEnumerable<Node> CollectNodes()
+    {
+        var nodes = PrisonManager.ActivePrison.Prisoners
+            .Select(p => new Node(p.Name, p.Index));
+        Console.WriteLine(JsonConvert.SerializeObject(nodes));
+        return nodes;
+    }
+
+    private IEnumerable<Edge> CollectEdges()
+    {
+        var edges = new List<Edge>();
+      
+        
+        foreach (var duel in PrisonManager.GetAllDuels())
+        {
+            var (p1, p2) = duel.Participants;
+            edges.Add(new Edge(p1.Prisoner.Index, p2.Prisoner.Index, this.Normalize(p1.Sentence)));
+            edges.Add(new Edge(p2.Prisoner.Index, p1.Prisoner.Index, this.Normalize(p2.Sentence)));
+        }
+        Console.WriteLine(JsonConvert.SerializeObject(edges));
+        return edges;
+    }
+
+    private int Normalize(int sentence)
+    {
+        if (this.Normalizer == 0)
+        {
+            return sentence;
+        }
+        return (sentence - PrisonManager.GetMinSentence()) / this.Normalizer;
+    }
+
+    private int? _normalizer;
+    private int Normalizer => _normalizer ??= (PrisonManager.GetMaxSentence() - PrisonManager.GetMinSentence()) / 10;
+    
+}

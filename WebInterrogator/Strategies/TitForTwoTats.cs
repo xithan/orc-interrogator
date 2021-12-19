@@ -14,7 +14,8 @@ namespace Interrogator.Strategies
                 return Move.Cooperate;
             }
 
-            return otherMoves.TakeLast(2).All(m => m == Move.Betray) && yourMoves.Last() == Move.Cooperate
+            return otherMoves.TakeLast(2).All(m => m == Move.Betray) 
+                   && yourMoves.Last() == Move.Cooperate
                 ? Move.Betray
                 : Move.Cooperate;
         }

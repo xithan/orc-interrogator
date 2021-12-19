@@ -3,7 +3,7 @@
   "description": "All betrays and cooperations per prisoner",
   "width": 500,
   "height": 200,
-  "padding": 20,
+  "padding": 30,
 
   "data": [
     {
@@ -36,14 +36,26 @@
     {
       "name": "color",
       "type": "ordinal",
-      "range": ["#7114a3", "#d154f3"],
+      "range": ["#510483", "#7114a3", "#d154f3", "#e174ff"],
       "domain": {"data": "table", "field": "c"}
+    },
+    {
+      "name": "legend_labels",
+      "type": "ordinal",
+      "domain": ["Betrayed Cooperator", "Both betrayed", "Cooperated with Betrayor", "Both cooperated"] ,
+      "range": ["#510483", "#7114a3", "#d154f3", "#e174ff"]
     }
   ],
-
+  "legends": [
+    {
+      "stroke": "legend_labels",
+      "fill": "legend_labels",
+      "title": "Moves"
+    }
+  ],
   "axes": [
     {"orient": "bottom", "scale": "x", "zindex": 1},
-    {"orient": "left", "scale": "y", "zindex": 1}
+    {"orient": "left", "scale": "y", "zindex": 1, "title": "turns"}
   ],
 
   "marks": [
@@ -56,7 +68,8 @@
           "width": {"scale": "x", "band": 1, "offset": -1},
           "y": {"scale": "y", "field": "y0"},
           "y2": {"scale": "y", "field": "y1"},
-          "fill": {"scale": "color", "field": "c"}
+          "fill": {"scale": "color", "field": "c"},
+          "tooltip": {"signal": "datum.y"}
         },
         "update": {
           "fillOpacity": {"value": 1}

@@ -186,11 +186,20 @@ a, .btn-link {
 }
 
 .start {
-    border-radius: 30px;
-    height: 60px;
-    width: 60px;
     vertical-align: middle;
     line-height: 2.7;
+}
+
+.btn-circle {
+    width: 60px;
+    border-radius: 30px;
+    height: 60px;
+}
+
+.btn-circle-lg {
+    border-radius: 80px;
+    height: 160px;
+    width: 160px;
 }
 
 .optano-logo-color {
@@ -262,9 +271,21 @@ a.btn-purple:hover, .btn-purple:hover {
 }
 
 .spin {
-    animation: 4s spin infinite;
+    animation: 4s spin infinite linear;
 }
 
+.fastspin {
+    animation: 0.5s spin infinite linear;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
@@ -309,4 +330,17 @@ a.btn-purple:hover, .btn-purple:hover {
 
 .card.ranking {
     width: 20rem;
+}
+
+.navbar-nav .nav-link {
+    padding-left: 10px !important;
+}
+
+.seed-input {
+    width: 6rem;
+}
+
+.answers .badge.points {
+    border-radius: 0;
+    
 }

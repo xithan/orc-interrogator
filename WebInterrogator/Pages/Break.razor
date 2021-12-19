@@ -19,11 +19,19 @@
 
 @if (CurrentRound < PrisonManager.TotalRoundCount)
 {
-    <button class="btn btn-purple" @onclick="NextRound">Next Round</button>    
+    <button class="btn btn-purple" @onclick="NextRound">Next Round</button>
+    <button class="btn btn-purple ml-4" @onclick="FastForward">Fast forward</button> 
 }
 
 
 @code {
+    private void FastForward()
+    {
+        PrisonManager.PrepareNextRound();
+        this.PrisonManager.FastRun();
+        this.Navigation.NavigateTo("break");
+    }
+    
     [Inject]
     private PrisonManager PrisonManager { get; set; }
     

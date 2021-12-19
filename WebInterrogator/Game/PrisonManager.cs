@@ -68,4 +68,9 @@ public class PrisonManager
             }
         }
     }
+
+    public IEnumerable<Duel> GetAllDuels()
+    {
+        return this.Rounds.SelectMany(r => r.Duels);
+    }
 }

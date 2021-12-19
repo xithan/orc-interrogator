@@ -1,8 +1,19 @@
 @page "/overview"
+@inject HttpClient Http;
+@inject IJSRuntime JsRuntime;
 @using Interrogator.Game
+@using Interrogator.Shared.Charts
 @using Round = Interrogator.Game.Round
+@using System.Runtime.Serialization
+@using Interrogator.Game.Analysis
+@using System.Runtime.CompilerServices
+@using Newtonsoft.Json
+@using Duel = Interrogator.Game.Duel
+
+<BetrayerChart/>
+<SentenceBarChart/>
+
 <div class="compact">
-    
     @if (PrisonManager != null)
     {
         @foreach (var round in @PrisonManager.Rounds)
@@ -13,9 +24,13 @@
 </div>
 
 @code {
+
+    private int Height => PrisonManager.ActivePrison.Prisoners.Count * PrisonManager.ActivePrison.Prisoners.Count * 20;
+
     [Inject] 
     private PrisonManager PrisonManager { get; set; }
     
     [Parameter]
     public int RoundId { get; set; }
+
 }

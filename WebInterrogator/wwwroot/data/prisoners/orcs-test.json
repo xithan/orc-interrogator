@@ -1,7 +1,11 @@
 [
   {
+    "name": "F4",
+    "strategy": "Fortress4"
+  },
+  {
     "name": "PK",
-    "strategy": "Nice"
+    "strategy": "PK"
   },
   {
     "name": "UM",
@@ -14,6 +18,10 @@
   {
     "name": "JW",
     "strategy": "Rando"
+  },
+  {
+    "name": "ATh",
+    "strategy": "Grudge"
   },
   {
     "name": "ATh",

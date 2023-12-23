@@ -27,6 +27,7 @@ a file "animals.json"
 
 Example:
 `zoo.json`
+
 ```json
 {
   "name": "Zoo",
@@ -38,6 +39,7 @@ Example:
   "turns":50,              # 0 for random
   "msPerTurn": 0.5
 }
+```
 
 4. Add your new prison in `Game/PrionManager.cs` to the `Prisons` dictionary:
 
